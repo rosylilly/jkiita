@@ -39,9 +39,10 @@ class Qiita.Client
     rerturn unless uuid?
     $('li.active').removeClass('active')
     item = @items[uuid]
-    $('header > h1').text(item.title);
-    $('#body').html(item.body);
-    $("li[data-uuid=#{uuid}]").addClass('active')
+    $('header > h1').text(item.title)
+    $('#body').html(item.body)
+    ofs = $("li[data-uuid=#{uuid}]").addClass('active').offset().top;
+    $('#items').stop(1).animate({scrollTop: ofs + 'px'}, 100)
 
   timeline:->
     # use self#post
