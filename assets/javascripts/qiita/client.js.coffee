@@ -18,10 +18,10 @@ class Qiita.Client
       @username = result.url_name
       console.log @
 
-  get = (params) ->
+  get: (params) ->
     # branch if _token
 
-  post = (params) ->
+  post: (params) ->
     # branch if _token
 
   stock: (uuid) ->
