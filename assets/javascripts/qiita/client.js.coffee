@@ -3,19 +3,8 @@
 class @Qiita
 class Qiita.Client
   _end_point = 'https://qiita.com/api/v1/'
-  constructor: (username, password)->
-    auth_url = _end_point + "auth"
-    opts =
-      url: auth_url
-      type: 'POST'
-      data:
-        url_name :username
-        password :password
-      dataType:'json'
-    $.ajax(opts).done (result)=>
-      @token = result.token
-      @username = result.url_name
-      console.log @
+  constructor: ()->
+    @items = {}
 
   get: (url, params, callback) ->
     @request(url, params, callback, 'GET')
@@ -39,14 +28,23 @@ class Qiita.Client
     @put "items/#{uuid}/stock", {}, (data) ->
       # do nothing
 
+  add: (item, i) ->
+    @items[item.uuid] = item
+    img = $('<img />').attr('src', item.user.profile_image_url)
+    li = $('<li />').attr('id','item'+i).addClass('item').append(img).append(item.title)
+    li.attr('data-uuid', item.uuid);
+    $('ul').append(li);
+
+  select: (uuid) ->
+    item = @items[uuid]
+    $('header > h1').text(item.title);
+    $('#body').html(item.body);
+
   timeline:->
     # use self#post
-    add_item = (item,i)->
-      img = $('img').attr('src',item.user.profile_image_url)
-      li = $('li').attr('id','item'+i).addClass('item').append(img).append(item.title)
-      $('ul').append(li)
     $.ajax({url:_end_point + 'items'})
-      .done((d)->
-        @timeline = d 
-        add_item(item,i)  for item,i in d
+      .done((d)=>
+        @timeline = d
+        @add(item,i)  for item,i in d
+        @select(d[0].uuid) if d[0]?
       )
