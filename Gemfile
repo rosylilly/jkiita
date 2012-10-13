@@ -11,3 +11,5 @@ gem 'yui-compressor', require: 'yui/compressor'
 gem 'coffee-script'
 
 gem 'shotgun'
+gem 'thin'
+gem 'foreman'
