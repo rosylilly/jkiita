@@ -4,8 +4,6 @@ $:.unshift "#{File.dirname(__FILE__)}/lib"
 
 class Application < Sinatra::Base
 
-  set :haml, format: :html5, escape_html: true, attr_wrapper: '"', ugly: production?
-
   set :sprockets, Sprockets::Environment.new
 
   configure do
@@ -29,17 +27,17 @@ class Application < Sinatra::Base
   helpers Sprockets::Helpers
 
   get '/' do
-    haml :index
+    slim :index
   end
 
   get '/*.html' do |path|
-    pass unless File.exist?(File.join(options.views.to_s, "#{path}.haml"))
-    haml path.to_sym
+    pass unless File.exist?(File.join(options.views.to_s, "#{path}.slim"))
+    slim path.to_sym
   end
 
   get '/*' do |path|
-    pass unless File.exist?(File.join(options.views.to_s, "#{path}.haml"))
-    haml path.to_sym
+    pass unless File.exist?(File.join(options.views.to_s, "#{path}.slim"))
+    slim path.to_sym
   end
 
 end

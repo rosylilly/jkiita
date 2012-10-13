@@ -1,9 +1,9 @@
-!!!
-%html{lang: 'ja'}
-  %head
-    %meta{charset: 'utf-8'}
-    %title= [ @page_title, settings.site_title ].compact.join(' - ')
-    %link{rel: 'stylesheet', type: 'text/css', href: stylesheet_path('application')}
-  %body
+doctype 5
+html lang='ja'
+  head
+    meta charset='utf-8'
+    title JKiita
+    link rel='stylesheet' type='text/css' href="#{stylesheet_path('application')}"
+  body
 
-    != yield
+    == yield
