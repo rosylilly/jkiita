@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
+require 'rubygems'
 $:.unshift "#{File.dirname(__FILE__)}/lib"
 
 class Application < Sinatra::Base
 
-  set :haml, format: :html5, escape_html: true, attr_wrapper: '"', ugly: production?
-
   set :sprockets, Sprockets::Environment.new
+  set :views, 'views'
 
   configure do
     set :site_title, ENV['SITE_TITLE']
@@ -29,17 +29,12 @@ class Application < Sinatra::Base
   helpers Sprockets::Helpers
 
   get '/' do
-    haml :index
+    slim :index
   end
 
-  get '/*.html' do |path|
-    pass unless File.exist?(File.join(options.views.to_s, "#{path}.haml"))
-    haml path.to_sym
-  end
-
-  get '/*' do |path|
-    pass unless File.exist?(File.join(options.views.to_s, "#{path}.haml"))
-    haml path.to_sym
+  get %r{/?(.+)(\.html)?$} do |path, ext|
+    pass unless File.exist?(File.join(options.views.to_s, "#{path}.slim"))
+    slim path.to_sym
   end
 
 end

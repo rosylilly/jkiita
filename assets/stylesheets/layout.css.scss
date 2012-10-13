@@ -1,25 +1,38 @@
-$blueprint-border-color: #eee;
-
-@import "compass/css3";
-@import "blueprint/liquid";
-
-section, article, aside, header, footer, nav {
-  display: block;
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
 }
 
-#container {
-  @include container;
+#toppage {
+  text-align: center;
 
-  > header {
-    @include column(24);
+  h1 {
+    font-family: serif;
+    font-size: 46px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -210.5px 0 0 -312px;
+    width: 624px;
+    height: 421px;
+    line-height: 150px;
+    z-index: 5;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+    font-weight: bold;
   }
 
-  > section {
-    @include column(16);
-  }
-
-  > aside {
-    @include column(8, last);
+  img {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -210.5px 0 0 -312px;
+    width: 624px;
+    height: 421px;
+    border-radius: 5px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
   }
 }
-
