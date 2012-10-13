@@ -37,7 +37,7 @@ class Qiita.Client
       success: callback
 
   stock: (uuid) ->
-    @get "items/#{uuid}/stock", {}, (data) ->
+    @put "items/#{uuid}/stock", {}, (data) ->
       # do nothing
 
   timeline: () ->
