@@ -29,6 +29,7 @@ class Qiita.Client
       # do nothing
 
   add: (item, i) ->
+    return if @items[item.uuid]?
     @items[item.uuid] = item
     img = $('<img />').attr('src', item.user.profile_image_url)
     li = $('<li />').attr('id','item'+i).addClass('item').append(img).append(item.title)
@@ -43,12 +44,13 @@ class Qiita.Client
     $('#body').html(item.body)
     ofs = $("li[data-uuid=#{uuid}]").addClass('active').offset().top;
     $('#items').stop(1).animate({scrollTop: ($('#items').scrollTop() + ofs) + 'px'}, 100)
+    $('#view').scrollTop(0)
 
   timeline:->
     # use self#post
     $.ajax({url:_end_point + 'items'})
       .done((d)=>
-        @timeline = d
+        @timeline = d.reverse()
         @add(item,i)  for item,i in d
         @select(d[0].uuid) if d[0]?
       )
