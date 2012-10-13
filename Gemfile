@@ -9,3 +9,5 @@ gem 'sprockets-sass'
 gem 'sprockets-helpers'
 gem 'yui-compressor', require: 'yui/compressor'
 gem 'coffee-script'
+
+gem 'shotgun'
