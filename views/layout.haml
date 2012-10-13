@@ -1,0 +1,19 @@
+!!!
+%html{lang: 'ja'}
+  %head
+    %meta{charset: 'utf-8'}
+    %title= [ @page_title, settings.site_title ].compact.join(' - ')
+    %link{rel: 'stylesheet', type: 'text/css', href: stylesheet_path('application')}
+  %body
+    #container
+      %header
+        %h1
+          %a{href: '/'}= settings.site_title
+      %section
+        != yield
+      %aside
+        %h1 Navigation
+        %section
+          %h1 Links
+          %ul
+            %li Website

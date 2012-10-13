@@ -1,0 +1,25 @@
+$blueprint-border-color: #eee;
+
+@import "compass/css3";
+@import "blueprint/liquid";
+
+section, article, aside, header, footer, nav {
+  display: block;
+}
+
+#container {
+  @include container;
+
+  > header {
+    @include column(24);
+  }
+
+  > section {
+    @include column(16);
+  }
+
+  > aside {
+    @include column(8, last);
+  }
+}
+
