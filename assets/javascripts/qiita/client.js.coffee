@@ -36,9 +36,12 @@ class Qiita.Client
     $('ul').append(li);
 
   select: (uuid) ->
+    rerturn unless uuid?
+    $('li.active').removeClass('active')
     item = @items[uuid]
     $('header > h1').text(item.title);
     $('#body').html(item.body);
+    $("li[data-uuid=#{uuid}]").addClass('active')
 
   timeline:->
     # use self#post
