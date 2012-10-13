@@ -21,8 +21,10 @@ class Qiita.Client
   get: (params) ->
     # branch if _token
 
-  post: (params) ->
+  post: (params, callback) ->
     # branch if _token
+    params.token = @token if @token?
+    $.getJSON(_end_point, params).done(callback)
 
   stock: (uuid) ->
     # use self#post
