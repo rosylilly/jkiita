@@ -6,17 +6,17 @@ class Qiita.Client
   _token = ''
   constructor: (username, password)->
     auth_url = _end_point + "auth"
-    opts = ->
+    opts =
       url: auth_url
       type: 'POST'
       data:
         url_name :username
         password :password
       dataType:'json'
-    $.ajax(opts).done((result)->
-      _token = result
-      console.log _token
-    )
+    $.ajax(opts).done (result)=>
+      @token = result.token
+      @username = result.url_name
+      console.log @
 
   get = (params) ->
     # branch if _token
