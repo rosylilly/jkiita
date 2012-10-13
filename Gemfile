@@ -1,7 +1,7 @@
 source :rubygems
 
 gem 'sinatra'
-gem 'haml'
+gem 'slim'
 gem 'sass'
 gem 'compass'
 gem 'sprockets'
