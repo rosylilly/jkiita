@@ -42,7 +42,7 @@ class Qiita.Client
     $('header > h1').text(item.title)
     $('#body').html(item.body)
     ofs = $("li[data-uuid=#{uuid}]").addClass('active').offset().top;
-    $('#items').stop(1).animate({scrollTop: ofs + 'px'}, 100)
+    $('#items').stop(1).animate({scrollTop: ($('#items').scrollTop() + ofs) + 'px'}, 100)
 
   timeline:->
     # use self#post
