@@ -3,7 +3,6 @@
 class @Qiita
 class Qiita.Client
   _end_point = 'https://qiita.com/api/v1/'
-  _token = ''
   constructor: (username, password)->
     auth_url = _end_point + "auth"
     opts =
@@ -27,12 +26,14 @@ class Qiita.Client
   stock: (uuid) ->
     # use self#post
 
-  timeline: () ->
+  timeline:->
     # use self#post
-
-
-
-
-
-
-
+    add_item = (item,i)->
+      img = $('img').attr('src',item.user.profile_image_url)
+      li = $('li').attr('id','item'+i).addClass('item').append(img).append(item.title)
+      $('ul').append(li)
+    $.ajax({url:_end_point + 'items'})
+      .done((d)->
+        @timeline = d 
+        add_item(item,i)  for item,i in d
+      )
