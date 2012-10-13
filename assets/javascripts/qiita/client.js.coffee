@@ -1,12 +1,12 @@
-#= require qiita
 #= require qiita/auth
 
+class @Qiita
 class Qiita.Client
   _end_point = 'https://qiita.com/api/v1/'
   _token = ''
   constructor: (username, password)->
     auth_url = _end_point + "auth"
-    opts ->
+    opts = ->
       url: auth_url
       type: 'POST'
       data:
@@ -15,6 +15,7 @@ class Qiita.Client
       dataType:'json'
     $.ajax(opts).done((result)->
       _token = result
+      console.log _token
     )
 
   get = (params) ->
