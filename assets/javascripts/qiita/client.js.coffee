@@ -2,8 +2,36 @@
 #= require qiita/auth
 
 class Qiita.Client
-  auth: (username, password)->
+  _end_point = 'https://qiita.com/api/v1/'
+  _token = ''
+  constructor: (username, password)->
+    auth_url = _end_point + "auth"
+    opts ->
+      url: auth_url
+      type: 'POST'
+      data:
+        url_name :username
+        password :password
+      dataType:'json'
+    $.ajax(opts).done((result)->
+      _token = result
+    )
 
-  stock: (uuid)->
+  get = (params) ->
+    # branch if _token
 
-  timeline: ()->
+  post = (params) ->
+    # branch if _token
+
+  stock: (uuid) ->
+    # use self#post
+
+  timeline: () ->
+    # use self#post
+
+
+
+
+
+
+
