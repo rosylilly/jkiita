@@ -17,14 +17,27 @@ class Qiita.Client
       @username = result.url_name
       console.log @
 
-  get = (params) ->
-    # branch if _token
+  get: (url, params, callback) ->
+    @request(url, params, callback, 'GET')
 
-  post = (params) ->
-    # branch if _token
+  post: (url, params, callback) ->
+    @request(url, params, callback, 'POST')
+
+  put: (url, params, callback) ->
+    @request(url, params, callback, 'PUT')
+
+  request: (url, params, callback, type = 'GET') ->
+    params.token = @token if @token?
+    $.ajax
+      url: _end_point + url
+      data: params
+      dataType: 'json'
+      type: type
+      success: callback
 
   stock: (uuid) ->
-    # use self#post
+    @put "items/#{uuid}/stock", {}, (data) ->
+      # do nothing
 
   timeline:->
     # use self#post
