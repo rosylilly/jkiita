@@ -21,13 +21,13 @@ class Qiita.Client
   get: (params) ->
     # branch if _token
 
-  post: (params, callback) ->
-    # branch if _token
+  post: (url, params, callback) ->
     params.token = @token if @token?
-    $.getJSON(_end_point, params).done(callback)
+    $.post(_end_point + url, params, callback, 'json')
 
   stock: (uuid) ->
-    # use self#post
+    @post "items/#{uuid}/stock", {}, (data) ->
+      # do nothing
 
   timeline: () ->
     # use self#post
