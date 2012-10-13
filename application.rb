@@ -18,6 +18,8 @@ class Application < Sinatra::Base
     end
     sprockets.append_path 'assets/javascripts'
     sprockets.append_path 'assets/stylesheets'
+    sprockets.append_path 'assets/images'
+
     if production?
       sprockets.js_compressor = YUI::JavaScriptCompressor.new(munge: true, optimize: true)
       sprockets.css_compressor = YUI::CssCompressor.new
@@ -31,12 +33,12 @@ class Application < Sinatra::Base
   end
 
   get '/*.html' do |path|
-    pass unless File.exist?(File.join(options.views, "#{path}.haml"))
+    pass unless File.exist?(File.join(options.views.to_s, "#{path}.haml"))
     haml path.to_sym
   end
 
   get '/*' do |path|
-    pass unless File.exist?(File.join(options.views, "#{path}.haml"))
+    pass unless File.exist?(File.join(options.views.to_s, "#{path}.haml"))
     haml path.to_sym
   end
 
