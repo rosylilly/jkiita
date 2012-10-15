@@ -3,18 +3,35 @@
 #= require qiita/client
 
 $ ()->
-  scrolling = $(window).height() / 2
-  $.client = new Qiita.Client()
+  scrolling = ->
+    $(window).height() / 2
+  client = new Qiita.Client()
 
-  $.client.timeline()
+  get = (callback)->
+    return if client.loading
+    client.timeline(callback)
+
+  get ()->
+      client.select($('#items li:first-child').attr('data-uuid'))
+
+  next = ->
+    uuid = $('li.active').next().attr('data-uuid')
+    unless client.select(uuid)
+      get()
+
+  prev = ->
+    uuid = $('li.active').prev().attr('data-uuid')
+    client.select(uuid)
+
+  $('#items li').live('click', () ->
+      client.select $(@).attr('data-uuid')
+      )
 
   shortcut.add 'j', ()->
-    uuid = $('li.active').next().attr('data-uuid')
-    $.client.select(uuid)
+    next()
 
   shortcut.add 'k', ()->
-    uuid = $('li.active').prev().attr('data-uuid')
-    $.client.select(uuid)
+    prev()
 
   shortcut.add 'Space', ()->
     view = $('#view').get(0)
@@ -23,10 +40,9 @@ $ ()->
       offset: view.offsetHeight
 
     if $('#view').scrollTop() + view.offset < view.height
-      $('#view').stop(1).animate({scrollTop: ($('#view').scrollTop() + scrolling) + 'px'}, 100)
+      $('#view').stop(1).animate({scrollTop: ($('#view').scrollTop() + scrolling()) + 'px'}, 100)
     else
-      uuid = $('li.active').next().attr('data-uuid')
-      $.client.select(uuid)
+      next()
 
   shortcut.add 'Shift+Space', ()->
     view = $('#view').get(0)
@@ -35,9 +51,8 @@ $ ()->
       offset: view.offsetHeight
 
     if $('#view').scrollTop() > 0
-      $('#view').stop(1).animate({scrollTop: ($('#view').scrollTop() - scrolling) + 'px'}, 100)
+      $('#view').stop(1).animate({scrollTop: ($('#view').scrollTop() - scrolling()) + 'px'}, 100)
     else
-      uuid = $('li.active').prev().attr('data-uuid')
-      $.client.select(uuid)
+      prev()
 
   shortcut.commandMode = true
